@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="theme.js" defer></script>
+  </head>
+  <body>
+    <div class="overlay">
+    <div class="chat-container">
+      <div class="chat-header">
+        <i class="material-icons" id="profile">account_circle</i>
+        <div class="chat-header-title"> Welcome to Ai Assistant</div>
+        <img src="light_mode.png" id="theme">
+      </div>
+      <div class="chat-messages">
+        <div class="message blue-bg">
+          <div class="message-sender ai">AI</div>
+          <div class="message-text AI">Hey, what's up?</div>
+        </div>
+        
+      </div>
+
+      <form class="chat-input-form">
+        <input type="text" class="chat-input" required placeholder="Type here, John..." />
+        <button type="submit" class="button material-icons" id="send-button">send</button>
+      </form>
+      <button class="button clear-chat-button">Clear Chat</button>
+    </div>
+   
+    <a href="https://www.freepik.com/free-vector/modern-desktop-background-geometric-blue-design-vector_18220884.htm#query=dark%20website%20background&position=6&from_view=keyword&track=ais&uuid=cef2ad4d-a96c-4e8b-818c-a9709d6a6f89">Image by rawpixel.com</a>
+  </div>
+    
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
