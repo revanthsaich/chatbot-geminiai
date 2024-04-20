@@ -2,6 +2,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import md from "markdown-it";
 
 //initalize the model
+const darkBgImage = 'url("/bg_dark.jpg")'
+document.body.style.setProperty('--bg-image', darkBgImage);
+
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 
            const themeImage = document.getElementById('theme');
