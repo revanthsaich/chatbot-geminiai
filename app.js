@@ -33,7 +33,7 @@ const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
                document.body.style.setProperty('--bg-image', lightBgImage);
                         }
            }
-           document.body.style.transition = "background-image 0.2s linear,  background-color 0.2s linear";
+           document.body.style.transition = "background-image linear,  background-color linear";
 
 
            themeImage.addEventListener('click', toggleTheme);
