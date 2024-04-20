@@ -20,8 +20,8 @@ const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
               const currentBgImage = getComputedStyle(document.body).getPropertyValue('--bg-image');
            
              // Define the new background image URLs for light and dark themes
-             const lightBgImage = 'url("bg_light.jpg")';
-             const darkBgImage = 'url("bg_dark.jpg")';
+             const lightBgImage = 'url("/bg_light.jpg")';
+             const darkBgImage = 'url("/bg_dark.jpg")';
            
              // Update the background image based on the current theme
              if (currentBgImage === lightBgImage) {
