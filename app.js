@@ -74,6 +74,7 @@ const chatInputForm = document.querySelector('.chat-input-form')
 const chatInput = document.querySelector('.chat-input')
 const clearChatBtn = document.querySelector('.clear-chat-button')
 
+chatInput.focus();
 
 
 const createChatMessageElement = (message) => `
@@ -82,7 +83,6 @@ const createChatMessageElement = (message) => `
     <div class="message-text">${message.text}</div>
   </div>
 `
-//chatInput.focus();
 
 window.onload = () => {
   messages.forEach((message) => {
