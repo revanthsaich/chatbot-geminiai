@@ -141,13 +141,14 @@ a
 }
 
 .message-sender {
+  font-size:1.4em;
   font-weight: bold;
   margin-bottom: 0.31em;
   color: var(--primary-color);
 }
 
 .message-text {
-  font-size: 1.15em;
+  font-size: 1.2em;
   margin-bottom: 0.31em;
   word-wrap: break-word;
   color: var(--primary-color);
@@ -169,7 +170,25 @@ a
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
 }
+.typing-indicator {
+  display: none;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: var(--primary-color);
+  border-right: 2px solid var(--primary-color); /* Simulate cursor */
+  white-space: nowrap; 
+  overflow: hidden;
+  animation: typing 0.7s steps(40, end) infinite;
 
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 12%;
+  }
+}
 
 .chat-input-form {
   display: flex;
@@ -205,7 +224,7 @@ a
   display: block;
   margin: 1em auto;
   background-color: #79a4c22a;
-  color: #fff;
+  color: var(--primary-color);
   font-size: 1em;
   font-weight: bold;
 }

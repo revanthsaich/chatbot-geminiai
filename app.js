@@ -4,6 +4,7 @@ import md from "markdown-it";
 //initalize the model
 const darkBgImage = 'url("/bg_dark.jpg")'
 document.body.style.setProperty('--bg-image', darkBgImage);
+const typingAnimation = document.querySelector('.typing-indicator');
 
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 
@@ -42,13 +43,15 @@ const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 
 async function getResponse(prompt) {
   
-
+  showTypingIndicator();
   const model = genAI.getGenerativeModel({model: "gemini-pro"});
   const answer = await model.generateContent(prompt);
   const response = await answer.response;
   const text = response.text();
   const text1 =text.trim();
   console.log(text1);
+  hideTypingIndicator();
+
   let messageSender = 'AI';
   const md_text = md().render(text1);
   const message = {
@@ -68,6 +71,15 @@ async function getResponse(prompt) {
   chatMessages.scrollTop = chatMessages.scrollHeight
 }
 
+function showTypingIndicator() {
+  const typingIndicator = document.querySelector('.typing-indicator');
+  typingIndicator.style.display = 'block';
+}
+
+function hideTypingIndicator() {
+  const typingIndicator = document.querySelector('.typing-indicator');
+  typingIndicator.style.display = 'none';
+}
 
 const chatMessages = document.querySelector('.chat-messages')
 const chatInputForm = document.querySelector('.chat-input-form')
