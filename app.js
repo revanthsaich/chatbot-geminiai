@@ -73,7 +73,7 @@ async function getResponse(prompt) {
 
 function showTypingIndicator() {
   const typingIndicator = document.querySelector('.typing-indicator');
-  typingIndicator.style.display = 'block';
+  typingIndicator.style.display = 'flex';
 }
 
 function hideTypingIndicator() {
