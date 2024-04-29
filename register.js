@@ -45,7 +45,7 @@ function register() {
                 }));
 
                 // Redirect to index1.html
-                window.location.href = url("app.html");
+                window.location.href = "/app.html";
             })
             .catch((error) => {
                 // Handle any errors that occur during database write
