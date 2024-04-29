@@ -106,9 +106,10 @@ a
   flex:1
   
 }
-.chat-header-title
+#chat-header-title
 {
   margin-top: 1vh;
+  text-align: center;
   margin-bottom: 1vh;
   flex:8;
   font-size:45px;
@@ -222,12 +223,34 @@ a
   font-weight: bold;
   
 }
+.button_container
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:1em;
+  margin-bottom: 0.5em;
+}
 
 .clear-chat-button {
   display: block;
+  padding: 1.05em;
   margin: 1em auto;
   background-color: #79a4c22a;
   color: var(--primary-color);
   font-size: 1em;
   font-weight: bold;
+  box-shadow: 0 0 1.25em 0.5em #00000033;
+  border: 0.01px solid rgba(255, 255, 255, 0.281);
+}
+.sign-out-button {
+  display: block;
+  padding: 1.05em;
+  margin: 1em auto;
+  background-color: #79a4c22a;
+  color: var(--primary-color);
+  font-size: 1em;
+  font-weight: bold;
+  box-shadow: 0 0 1.25em 0.5em #00000033;
+  border: 0.01px solid rgba(255, 255, 255, 0.281);
 }
