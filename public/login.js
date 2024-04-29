@@ -38,7 +38,7 @@ function signInUser() {
                 sessionStorage.setItem("user-info",JSON.stringify({
                     full_name:snapshot.val().full_name
                 }))
-                window.location.href = "index1.html";
+                window.location.href = "/app.html";
             }
         })
 
