@@ -44,7 +44,6 @@ function register() {
                     full_name: userData.full_name
                 }));
 
-                // Redirect to index1.html
                 window.location.href = "/app.html";
             })
             .catch((error) => {

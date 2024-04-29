@@ -41,6 +41,10 @@ function signInUser() {
                 window.location.href = "app.html";
             }
         })
+        .catch((error) => {
+          // Handle any errors that occur during database write
+          console.error("Error writing user data to database:", error);
+      });
 
     })
 
