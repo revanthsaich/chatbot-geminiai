@@ -44,7 +44,7 @@ function register() {
                     full_name: userData.full_name
                 }));
 
-                window.location.href = "/public/app.html";
+                window.location.href = "./app.html";
             })
             .catch((error) => {
                 // Handle any errors that occur during database write
