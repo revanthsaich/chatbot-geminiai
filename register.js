@@ -18,12 +18,15 @@ const auth = getAuth(app);
 const db = getDatabase();
 
 const registerButton = document.getElementById('registerButton');
+const loginButton = document.getElementById('loginbutton');
 
 // Add event listener to the register button
 registerButton.addEventListener('click', function() {
     register();
 });
-
+loginButton.addEventListener('click', function() {
+  login();
+});
 function register() {
 
     const email = document.getElementById('email').value;
@@ -59,6 +62,47 @@ function register() {
           } else if (err.code === AuthErrorCodes.INVALID_EMAIL) {
             alert("The email address is Invalid.");
           } else {
+            console.log(err.code);
+            alert(err.code);
+          }
+    });
+}
+
+function login() {
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    console.log(email);
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        get(child(dbref, 'UserAuthList/'+ userCredential.user.uid)).then((snapshot)=>{
+            if(snapshot.exists)
+            {
+                sessionStorage.setItem("user-info",JSON.stringify({
+                    full_name:snapshot.val().full_name
+                }))
+                window.location.href = "./app.html";
+            }
+        })
+        .catch((error) => {
+          // Handle any errors that occur during database write
+          console.error("Error writing user data to database:", error);
+      });
+
+    })
+
+        .catch((err) => {
+            if (err.code === AuthErrorCodes.WEAK_PASSWORD) {
+            setError("The password is too weak.");
+          } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
+            setError("The email address is already in use.");
+          } else if (err.code === AuthErrorCodes.INVALID_EMAIL) {
+            alert("The email address is Invalid.");
+          } else if (err.code === AuthErrorCodes.INVALID_PASSWORD) {
+            alert("The Password is Incorrect.");
+          } else if (err.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+            alert("The Login Details are Invalid.");
+          }else {
             console.log(err.code);
             alert(err.code);
           }
