@@ -1,6 +1,6 @@
-import { initializeApp } from '/firebase/app';
-import { AuthErrorCodes,getAuth,signInWithEmailAndPassword  } from "/firebase/auth";
-import { getDatabase , get ,ref,child} from "/firebase/database";
+import { initializeApp } from './firebase/app';
+import { AuthErrorCodes,getAuth,signInWithEmailAndPassword  } from "./firebase/auth";
+import { getDatabase , get ,ref,child} from "./firebase/database";
 
 
 const firebaseConfig = {
