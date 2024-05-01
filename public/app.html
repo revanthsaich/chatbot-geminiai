@@ -1,62 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat App</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  </head>
-  <body>
-    <div class="overlay">
-    <div class="chat-container">
-      <div class="chat-header">
-        <i class="material-icons" id="profile">account_circle</i>
-        <div id="chat-header-title"></div>
-        <img src="light_mode.png" id="theme">
-      </div>
-      <div class="chat-messages">
-        <div class="message blue-bg">
-          <div class="message-sender ai">AI</div>
-          <div class="message-text AI">Hey, what's up?</div>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Chat App</title>
+      <link rel="stylesheet" type="text/css" href="/style.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+      <div class="overlay">
+      <div class="chat-container">
+        <div class="chat-header">
+          <i class="material-icons" id="profile">account_circle</i>
+          <div id="chat-header-title"></div>
+          <img src="light_mode.png" id="theme">
         </div>
-      
-      </div>
-      <div class="typing-indicator">
-        <span>Generating response...</span>
-        <i class="material-icons rotate">refresh</i>
-      </div>
+        <div class="chat-messages">
+          <div class="message blue-bg">
+            <div class="message-sender ai">AI</div>
+            <div class="message-text AI">Hey, what's up?</div>
+          </div>
+        
+        </div>
+        <div class="typing-indicator">
+          <span>Generating response...</span>
+          <i class="material-icons rotate">refresh</i>
+        </div>
 
-      <form class="chat-input-form">
-        <input type="text" class="chat-input" required placeholder="Type here...." />
-        <button type="submit" class="button material-icons" id="send-button">send</button>
-      </form>
-      <div class="button_container">
-      <button class="button clear-chat-button">Clear Chat</button>
-      <button class="button sign-out-button" id="signout">Sign Out</button>
+        <form class="chat-input-form">
+          <input type="text" class="chat-input" required placeholder="Type here...." />
+          <button type="submit" class="button material-icons" id="send-button">send</button>
+        </form>
+        <div class="button_container">
+        <button class="button clear-chat-button">Clear Chat</button>
+        <button class="button sign-out-button" id="signout">Sign Out</button>
+        </div>
       </div>
     </div>
-   </div>
-    <script>
-      let UserInfo =JSON.parse(sessionStorage.getItem("user-info"));
+      <script>import { GoogleGenerativeAI } from "/@google/generative-ai";
+        import md from "./markdown-it";
+        
+        //initalize the model
+        const darkBgImage = 'url("/bg_dark.jpg")'
+        document.body.style.setProperty('--bg-image', darkBgImage);
+        const typingAnimation = document.querySelector('.typing-indicator');
+        
+        const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
+        
+                   const themeImage = document.getElementById('theme');
+                   function toggleTheme() {
+                       document.body.classList.toggle('dark-theme');
+                       if(document.body.classList.contains("dark-theme"))
+                       {
+                           theme.src="dark_mode.png"
+                           document.body.style.background=""
+                       }
+                       else
+                       {
+                           theme.src="light_mode.png"
+                       }
+                   
+                      const currentBgImage = getComputedStyle(document.body).getPropertyValue('--bg-image');
+                   
+                     // Define the new background image URLs for light and dark themes
+                     const lightBgImage = 'url("/bg_light.jpg")';
+                     const darkBgImage = 'url("/bg_dark.jpg")';
+                   
+                     // Update the background image based on the current theme
+                     if (currentBgImage === lightBgImage) {
+                       document.body.style.setProperty('--bg-image', darkBgImage);
+                     } else {
+                       document.body.style.setProperty('--bg-image', lightBgImage);
+                                }
+                   }
+                   document.body.style.transition = "background-image linear,  background-color linear";
+        
+        
+                   themeImage.addEventListener('click', toggleTheme);
+        
+        
+        
+        async function getResponse(prompt) {
+          
+          showTypingIndicator();
+          const model = genAI.getGenerativeModel({model: "gemini-pro"});
+          const answer = await model.generateContent(prompt);
+          const response = await answer.response;
+          const text = response.text();
+          const text1 =text.trim();
+          console.log(text1);
+          hideTypingIndicator();
+        
+          let messageSender = 'AI';
+          const md_text = md().render(text1);
+          const message = {
+            sender: messageSender,
+            text: md_text,
+          
+          }
+        
+        
+          /* Add message to DOM */
+          chatMessages.innerHTML += createChatMessageElement(message)
+        
+          /* Clear input field */
+          chatInputForm.reset()
+        
+          /*  Scroll to bottom of chat messages */
+          chatMessages.scrollTop = chatMessages.scrollHeight
+        }
+        
+        function showTypingIndicator() {
+          const typingIndicator = document.querySelector('.typing-indicator');
+          typingIndicator.style.display = 'flex';
+        }
+        
+        function hideTypingIndicator() {
+          const typingIndicator = document.querySelector('.typing-indicator');
+          typingIndicator.style.display = 'none';
+        }
+        
+        const chatMessages = document.querySelector('.chat-messages')
+        const chatInputForm = document.querySelector('.chat-input-form')
+        const chatInput = document.querySelector('.chat-input')
+        const clearChatBtn = document.querySelector('.clear-chat-button')
+        
+        chatInput.focus();
+        
+        
+        const createChatMessageElement = (message) => `
+          <div class="message ${message.sender === 'User' ? 'gray-bg' : 'blue-bg'}">
+            <div class="message-sender">${message.sender}</div>
+            <div class="message-text">${message.text}</div>
+          </div>
+        `
+        
+        window.onload = () => {
+          messages.forEach((message) => {
+            chatMessages.innerHTML += createChatMessageElement(message)
+          })
+        }
+        
+        
+        const sendMessage = (e) => {
+          let messageSender = 'User'
+          const message = {
+            sender: messageSender,
+            text: chatInput.value,
+          
+          }
+          e.preventDefault()
+          var uinput=chatInput.value.trim();
+          
+          getResponse(uinput);
+        
+        
+          /* Add message to DOM */
+          chatMessages.innerHTML += createChatMessageElement(message)
+        
+          /* Clear input field */
+          chatInputForm.reset()
+        
+          /*  Scroll to bottom of chat messages */
+          chatMessages.scrollTop = chatMessages.scrollHeight
+        }
+        
+        chatInputForm.addEventListener('submit', sendMessage)
+        
+        clearChatBtn.addEventListener('click', () => {
+          chatMessages.innerHTML = ''
+        })
+        
+
+        let UserInfo =JSON.parse(sessionStorage.getItem("user-info"));
+        
+        let header_title = document.getElementById('chat-header-title');
+        let SignoutBtn= document.getElementById('signout');
+        header_title.innerHTML = `Welcome ${UserInfo.full_name}`;
+
+        let Signout =() => {
+          sessionStorage.removeItem("user-info");
+          window.location.href = "index.html";
+        }
+
+        let CheckCred = () => {
+          if(!sessionStorage.getItem("user-info"))
+              window.location.href= 'login.html'
+        }
+
+        SignoutBtn.addEventListener('click',Signout);
       
-      let header_title = document.getElementById('chat-header-title');
-      let SignoutBtn= document.getElementById('signout');
-      header_title.innerHTML = `Welcome ${UserInfo.full_name}`;
-
-      let Signout =() => {
-        sessionStorage.removeItem("user-info");
-        window.location.href = "index.html";
-      }
-
-      let CheckCred = () => {
-        if(!sessionStorage.getItem("user-info"))
-            window.location.href= 'login.html'
-      }
-
-      SignoutBtn.addEventListener('click',Signout);
-    
-    </script>
-    <script type="module" src="app.js"></script>
-  </body>
-</html>
+      </script>
+    </body>
+  </html>
