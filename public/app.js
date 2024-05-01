@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "/@google/generative-ai";
-import md from "/markdown-it";
+import md from "./markdown-it";
 
 //initalize the model
 const darkBgImage = 'url("/bg_dark.jpg")'
