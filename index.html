@@ -1,36 +1,66 @@
-<!DOCTYPE html>
-<html>
+  <!DOCTYPE html>
+  <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <title>Register</title>
-        <link rel="stylesheet" type="text/css" href="/register.css">
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Chat App</title>
+      <link rel="stylesheet" type="text/css" href="/style.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      
 
     </head>
     <body>
-        <div id="content_container">
-            <div id="form_container">
-                <div id="form_header_container">
-                    <h2 id="form_header"> SignUp </h2>
-                </div>
-
-                <div id="form_content_container">
-                    <div id="form_content_inner_container">
-                        <input type="text" id="full_name" placeholder="Full name">
-                        <input type="email" id="email" placeholder="Email">
-                        <input type="password" id="password" placeholder="Password">
-
-                        <div id="button_container">
-                            <button type="button" id="loginButton">Login</button></a>
-                            <button type="button" id="registerButton">Register</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+      <div class="overlay">
+      <div class="chat-container">
+        <div class="chat-header">
+          <i class="material-icons" id="profile">account_circle</i>
+          <div id="chat-header-title"></div>
+          <img src="light_mode.png" id="theme">
+        </div>
+        <div class="chat-messages">
+          <div class="message blue-bg">
+            <div class="message-sender ai">AI</div>
+            <div class="message-text AI">Hey, what's up?</div>
+          </div>
+        
+        </div>
+        <div class="typing-indicator">
+          <span>Generating response...</span>
+          <i class="material-icons rotate">refresh</i>
         </div>
 
+        <form class="chat-input-form">
+          <input type="text" class="chat-input" required placeholder="Type here...." />
+          <button type="submit" class="button material-icons" id="send-button">send</button>
+        </form>
+        <div class="button_container">
+        <button class="button clear-chat-button">Clear Chat</button>
+        <button class="button sign-out-button" id="signout">Sign Out</button>
+        </div>
+      </div>
+    </div>
+      <script>
+        
+        let UserInfo =JSON.parse(sessionStorage.getItem("user-info"));
+        
+        let header_title = document.getElementById('chat-header-title');
+        let SignoutBtn= document.getElementById('signout');
+        header_title.innerHTML = `Welcome ${UserInfo.full_name}`;
 
-    <script type="module" src="register.js"></script>
+        let Signout =() => {
+          sessionStorage.removeItem("user-info");
+          window.location.href = "index.html";
+        }
+
+        let CheckCred = () => {
+          if(!sessionStorage.getItem("user-info"))
+              window.location.href= 'login.html'
+        }
+
+        SignoutBtn.addEventListener('click',Signout);
+      
+      </script>
+          <script type="module" src="./app.js"></script>
+
     </body>
-
-</html>
+  </html>
