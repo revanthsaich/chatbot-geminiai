@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "../@google/generative-ai";
 import md from "markdown-it";
 
 //initalize the model
