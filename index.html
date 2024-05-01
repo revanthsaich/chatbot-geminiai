@@ -14,7 +14,7 @@
       <div class="chat-container">
         <div class="chat-header">
           <i class="material-icons" id="profile">account_circle</i>
-          <div id="chat-header-title"></div>
+          <div id="chat-header-title">Welcome to AI Assistant</div>
           <img src="light_mode.png" id="theme">
         </div>
         <div class="chat-messages">
@@ -39,28 +39,7 @@
         </div>
       </div>
     </div>
-      <script>
-        
-        let UserInfo =JSON.parse(sessionStorage.getItem("user-info"));
-        
-        let header_title = document.getElementById('chat-header-title');
-        let SignoutBtn= document.getElementById('signout');
-        header_title.innerHTML = `Welcome ${UserInfo.full_name}`;
-
-        let Signout =() => {
-          sessionStorage.removeItem("user-info");
-          window.location.href = "index.html";
-        }
-
-        let CheckCred = () => {
-          if(!sessionStorage.getItem("user-info"))
-              window.location.href= 'login.html'
-        }
-
-        SignoutBtn.addEventListener('click',Signout);
-      
-      </script>
-          <script type="module" src="./app.js"></script>
+        <script type="module" src="./app.js"></script>
 
     </body>
   </html>
